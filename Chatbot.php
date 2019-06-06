@@ -32,20 +32,33 @@
     $userId = $deCode['events'][0]['source']['userId'];
     $userMsg = $deCode['events'][0]['message']['text'];
 
+    $type = $deCode['events'][0]['type'];
+
     $length = 0;
 
+    if($type === "follow"){
+        $messages['messages'][0] = getFormatTextMessage("ยินดีต้อนรับสู่บอทเช็คหวย
+        ท่านสามารถใส่หมายเลขหวยได้ที่นี่");  
+    }
+    else{
 
     if($userMsg === "หวย" | $userMsg === "เช็คหวย" | $userMsg === "ตรวจหวย"){
         $messages['messages'][0] = getFormatTextMessage("โปรดใส่เลขหวยของท่าน");  
     }else{
+        $error = false;
         $lotto = str_split($userMsg);
-        foreach ($lotto as &$value) {
-            if(is_numeric($value)){
-                $length = count($lotto);
+        $length = count($lotto);
+        foreach($lotto as &$value) {
+            
+            if(!ctype_digit($value)){
+               
+                $error = true;
             }
-        }
+        } 
+            if(!$error){
                 if($length === 6){
                     $messages['messages'][0] = getFormatTextMessage("Text type correct");
+                    
                     //พื้นที่เช็คหวย ต้องต่อกับดาต้าเบส solr ก่อน if(){
         
                     // }
@@ -53,10 +66,17 @@
         
                     // }
                 }
-                else if($userMsg!=""){
-                    $messages['messages'][0] = getFormatTextMessage("เลขหวยไม่ถูกต้อง โปรดใส่เลขอีกครั้ง");
+                else{
+                    $messages['messages'][0] = getFormatTextMessage("กรุณากรอกตัวเลขให้ครบ 6 หลัก");
                 }
+            }
+          
+            else{
+                $messages['messages'][0] = getFormatTextMessage("กรุณาตอบแต่ตัวเลข");
+            }
+            
 }
+    }
 
     
 
