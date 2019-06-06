@@ -18,7 +18,7 @@
     
     // }
 
-    //https://tbot-kangwank.herokuapp.com/replyslow?keyword=hi
+    
 
 	/*Decode Json From LINE Data Body*/
 	$deCode = json_decode($datas,true);
@@ -31,9 +31,8 @@
     $userId = $deCode['events'][0]['source']['userId'];
     $userMsg = $deCode['events'][0]['message']['text'];
 
-    if($userMsg === "หวย"){
-        $messages['messages'][0] = getFormatTextMessage("โปรดใส่เลขหวยของท่าน");
-        
+    if($userMsg === "หวย" | $userMsg === "เช็คหวย" | $userMsg === "ตรวจหวย"){
+        $messages['messages'][0] = getFormatTextMessage("โปรดใส่เลขหวยของท่าน");  
     }else{
         $lotto = str_split($userMsg);
         $length = count($lotto);
@@ -45,16 +44,12 @@
         }
     }
 
-    $adminIds = [
-        'U408d7883b3c5391189fe4be0bacc510d', //ผม
-        'Uf5eb52c433caf7469d0803f27ad3fa77' //ป้า
-    ];
-	
+    
 
 	$encodeJson = json_encode($messages);
 
 	$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
-  	$LINEDatas['token'] = "h2yWwD7TCAKsWXpeYAkmSgMD2XShISe/FWUHOPX8/2XmrK8KUb/AwlIr5evYzI0VKFGBsEVpeTsdwxu9AIRxFaMB+VhJiiKYPEY9Bd3vDP7z/0SfmtfxvhQqcuOaPILzn1J7AL6A1TO1kBd2KO0pzAdB04t89/1O/w1cDnyilFU=";
+  	$LINEDatas['token'] = "CsdmTFDoEl5u7L3Gime7bMvWl1A3t5bOLCJW8HRFc7ggWYq8nd9n0ZW+yU3rt3R76Xei5pz17m+fB+TgVRyilu9rl0Dk7dvtzroqrwGysAL96O9j2qTwjEn+YGQ0aNriK+d519gj6q7o3CJpKlBhfgdB04t89/1O/w1cDnyilFU=";
 
   	$results = sentMessage($encodeJson,$LINEDatas);
 
@@ -114,7 +109,7 @@
     function _secureRequest($secret,$secretKey,$url = ''){
         if(!$url){ exit('empty requestUrl');}
         $massage = _request($url);
-        // if( hash($secret,$massage['message']+$secretKey) == $massage['encryptToken']){
+        
         if(true){
             return $massage;
         }else{
