@@ -1,5 +1,6 @@
 <?php 
-	/*Get Data From POST Http Request*/
+    /*Get Data From POST Http Request*/
+    
     $datas = file_get_contents('php://input');
     
     // {
@@ -31,18 +32,31 @@
     $userId = $deCode['events'][0]['source']['userId'];
     $userMsg = $deCode['events'][0]['message']['text'];
 
+    $length = 0;
+
+
     if($userMsg === "หวย" | $userMsg === "เช็คหวย" | $userMsg === "ตรวจหวย"){
         $messages['messages'][0] = getFormatTextMessage("โปรดใส่เลขหวยของท่าน");  
     }else{
         $lotto = str_split($userMsg);
-        $length = count($lotto);
-        if($length === 6){
-            $messages['messages'][0] = getFormatTextMessage("Text type correct");
+        foreach ($lotto as &$value) {
+            if(is_numeric($value)){
+                $length = count($lotto);
+            }
         }
-        else{
-            $messages['messages'][0] = getFormatTextMessage("เลขหวยไม่ถูกต้อง โปรดใส่เลขอีกครั้ง");
-        }
-    }
+                if($length === 6){
+                    $messages['messages'][0] = getFormatTextMessage("Text type correct");
+                    //พื้นที่เช็คหวย ต้องต่อกับดาต้าเบส solr ก่อน if(){
+        
+                    // }
+                    // else{
+        
+                    // }
+                }
+                else if($userMsg!=""){
+                    $messages['messages'][0] = getFormatTextMessage("เลขหวยไม่ถูกต้อง โปรดใส่เลขอีกครั้ง");
+                }
+}
 
     
 
