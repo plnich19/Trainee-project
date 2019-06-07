@@ -42,7 +42,7 @@
     }
     else{
 
-    if($userMsg === "หวย" | $userMsg === "เช็คหวย" | $userMsg === "ตรวจหวย"){
+    if($userMsg === "ตรวจหวย"){
         $messages['messages'][0] = getFormatTextMessage("โปรดใส่เลขหวยของท่าน");  
     }else{
         $error = false;
