@@ -116,6 +116,21 @@
             //ส่งเป็นวิดีโอกลับไป
             $messages['messages'][0] = getFormatVideoMessage("https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_5mb.mp4","https://sv1.picz.in.th/images/2019/06/10/13KtEI.jpg");
         }
+	else if($msgType === "audio"){
+            //ส่งเป็นวิดีโอกลับไป
+            $messages['messages'][0] = getFormatAudioMessage("http://cdn.online-convert.com/example-file/audio/example.m4a");
+        }
+
+        else if($msgType === "location"){
+            //ส่งเป็นวิดีโอกลับไป
+            $messages['messages'][0] = getFormatLocationMessage("the sims");
+        }
+
+        else if($msgType === "sticker"){
+            //ส่งเป็นวิดีโอกลับไป
+            $messages['messages'][0] = getFormatStickerMessage("1","1");
+        }
+    }
         
     }
 
