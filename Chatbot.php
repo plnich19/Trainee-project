@@ -69,12 +69,9 @@
             }
             else if($userMsg === "git"){ 
                 $messages['messages'][0] = githubButton("GITHUB");  
-<<<<<<< Updated upstream
-=======
             }
             else if($userMsg === "car"){ 
                 $messages['messages'][0] = getCorousel("this is"); 
->>>>>>> Stashed changes
             }else{
                 $error = false;
                 $lotto = str_split($userMsg);
@@ -352,8 +349,6 @@
 		return $datas;
     }
 
-<<<<<<< Updated upstream
-=======
     function getCorousel($text){
         $datas = [];
 		$datas['type'] = 'template';
@@ -405,7 +400,6 @@
     //     }
     //   }
 
->>>>>>> Stashed changes
     // {
     //     "type": "flex",
     //     "altText": "Flex Message",
