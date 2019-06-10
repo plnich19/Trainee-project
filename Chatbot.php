@@ -55,7 +55,7 @@
     $length = 0;
 
     $LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
-    $LINEDatas['token'] = "ru4/SF1WPPPD2har7K2Uqdw379dZwjGbo1nDhSKoPPUW8W7VFUegNWRyR7vA7By06Xei5pz17m+fB+TgVRyilu9rl0Dk7dvtzroqrwGysAJEEXkK8s4GyzHcmKUFQbWzM/mHpbY/dOOf4J24q/iTwgdB04t89/1O/w1cDnyilFU=";
+    $LINEDatas['token'] = "Nk3abhHVxBzKAWlabRc5Zv26MJICEUAePNJheXK/5hi3+XdfigCpR/RzRpqkPgGv6Xei5pz17m+fB+TgVRyilu9rl0Dk7dvtzroqrwGysALsoyXa01XZG4z/XIfyQKpSnuUBHIVJ+y3c2o10zG1clwdB04t89/1O/w1cDnyilFU=";
       
     if($type === "follow"){
         $messages['messages'][0] = getFormatTextMessage("ยินดีต้อนรับสู่บอทเช็คหวย ท่านสามารถใส่หมายเลขหวยได้ที่นี่ค่ะ");  
@@ -106,10 +106,14 @@
             $file = fopen($filename,"w");
             fwrite($file,$result);
             fclose($file);
-            //$messages['messages'][0] = getFormatTextMessage($userImg);
-            
-           
+            $messages['messages'][0] = getFormatImageMessage("https://sv1.picz.in.th/images/2019/06/10/13KwXP.jpg","https://sv1.picz.in.th/images/2019/06/10/13KtEI.jpg");
         }
+
+        else if($msgType === "video"){
+            //ส่งเป็นวิดีโอกลับไป
+            $messages['messages'][0] = getFormatVideoMessage("https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_5mb.mp4","https://sv1.picz.in.th/images/2019/06/10/13KtEI.jpg");
+        }
+        
     }
 
 	$encodeJson = json_encode($messages);
@@ -224,4 +228,56 @@
         curl_close($curl);
        return $response;
    }
+
+   function getFormatImageMessage($oriContent, $preImg)
+	{
+		$datas = [];
+		$datas['type'] = 'image';
+        $datas['originalContentUrl'] = $oriContent;
+        $datas['previewImageUrl'] = $preImg;
+
+		return $datas;
+    }
+    
+    function getFormatVideoMessage($oriContent, $preImg)
+	{
+		$datas = [];
+		$datas['type'] = 'video';
+        $datas['originalContentUrl'] = $oriContent;
+        $datas['previewImageUrl'] = $preImg;
+
+		return $datas;
+    }
+
+    function getFormatAudioMessage($oriContent)
+	{
+		$datas = [];
+		$datas['type'] = 'audio';
+        $datas['originalContentUrl'] = $oriContent;
+        $datas['duration'] = 240000;
+
+		return $datas;
+    }
+
+    function getFormatLocationMessage($lo)
+	{
+		$datas = [];
+		$datas['type'] = 'location';
+        $datas['title'] = $lo;
+        $datas['address'] = 'Bangkok Thailand';
+        $datas['latitude'] = 35.65910807942215;
+        $datas['longitude'] = 139.70372892916203;
+        
+        return $datas;
+    }
+
+    function getFormatStickerMessage($packetID,$stickerID)
+	{
+		$datas = [];
+		$datas['type'] = 'sticker';
+        $datas['packageId'] = $packetID;
+        $datas['stickerId'] = $stickerID;
+
+		return $datas;
+    }
 ?>
