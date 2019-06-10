@@ -57,7 +57,8 @@
     $length = 0;
 
     $LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
-    $LINEDatas['token'] = "Nk3abhHVxBzKAWlabRc5Zv26MJICEUAePNJheXK/5hi3+XdfigCpR/RzRpqkPgGv6Xei5pz17m+fB+TgVRyilu9rl0Dk7dvtzroqrwGysALsoyXa01XZG4z/XIfyQKpSnuUBHIVJ+y3c2o10zG1clwdB04t89/1O/w1cDnyilFU=";
+    $LINEDatas['token'] = "Z8x4RUR3vTzGj2N0C/pWdSAImkdDUeTD22eWfXCxkUrApzzzNhffYpoN3noeMmzy6Xei5pz17m+fB+TgVRyilu9rl0Dk7dvtzroqrwGysAISFEiTaxr4aLqMFtYBRVPWM6xxNgA5/avVvvge0AR8ywdB04t89/1O/w1cDnyilFU=
+    ";
       
     if($type === "follow"){
         $messages['messages'][0] = getFormatTextMessage("ยินดีต้อนรับสู่บอทเช็คหวย ท่านสามารถใส่หมายเลขหวยได้ที่นี่ค่ะ");  
@@ -69,7 +70,11 @@
             }
             else if($userMsg === "git"){ 
                 $messages['messages'][0] = githubButton("GITHUB");  
-            }else{
+            }
+            elseif($userMsg === "check"){
+                $messages['messages'][0] = checkButton("CheckLotto");
+            }
+            else{
                 $error = false;
                 $lotto = str_split($userMsg);
                 $length = count($lotto);
@@ -345,6 +350,79 @@
 
 		return $datas;
     }
+
+    function checkButton($buttonCheck){
+        $datas = [];
+        $datas['type'] = 'flex';
+        $datas['altText'] = "Flex Message";
+        $datas['contents']['type'] = "bubble";
+        $datas['contents']['direction'] = "ltr";
+        $datas['contents']['header']['type'] = "box";
+        $datas['contents']['header']['layout'] = "vertical";
+        $datas['contents']['header']['contents'][0]['type'] = "text";
+        $datas['contents']['header']['contents'][0]['text'] = "CheckLotto";
+        $datas['contents']['header']['contents'][0]['align'] = "center";
+        $datas['contents']['hero']['type']="image";
+        $datas['contents']['hero']['url']="https://developers.line.biz/assets/images/services/bot-designer-icon.png";
+        $datas['contents']['hero']['size']="full";
+        $datas['contents']['hero']['aspectRatio']="1.51:1";
+        $datas['contents']['hero']['aspectMode']="fit";
+        $datas['contents']['hero']['backgroundColor']="#FFFFFF";
+        $datas['contents']['hero']['action']['type']="uri";
+        $datas['contents']['hero']['action']['uri']="https://news.sanook.com/lotto/";
+        $datas['contents']['footer']['type']="box";
+        $datas['contents']['footer']['layout']="horizontal";
+        $datas['contents']['footer']['content'][0]['type']="button";
+        $datas['contents']['footer']['content'][0]['action']['type']="uri";
+        $datas['contents']['footer']['content'][0]['action']['label']=$buttonCheck;
+        $datas['contents']['footer']['content'][0]['action']['uri']="https://news.sanook.com/lotto/";
+    }
+
+    // {
+    //     "type": "flex",
+    //     "altText": "Flex Message",
+    //     "contents": {
+    //       "type": "bubble",
+    //       "direction": "ltr",
+    //       "header": {
+    //         "type": "box",
+    //         "layout": "vertical",
+    //         "contents": [
+    //           {
+    //             "type": "text",
+    //             "text": "Header",
+    //             "align": "center"
+    //           }
+    //         ]
+    //       },
+    //       "hero": {
+    //         "type": "image",
+    //         "url": "https://developers.line.biz/assets/images/services/bot-designer-icon.png",
+    //         "size": "full",
+    //         "aspectRatio": "1.51:1",
+    //         "aspectMode": "fit",
+    //         "backgroundColor": "#FFFFFF",
+    //         "action": {
+    //           "type": "uri",
+    //           "uri": "https://news.sanook.com/lotto/"
+    //         }
+    //       },
+    //       "footer": {
+    //         "type": "box",
+    //         "layout": "horizontal",
+    //         "contents": [
+    //           {
+    //             "type": "button",
+    //             "action": {
+    //               "type": "uri",
+    //               "label": "Button",
+    //               "uri": "https://news.sanook.com/lotto/"
+    //             }
+    //           }
+    //         ]
+    //       }
+    //     }
+    //   }
 
     // {
     //     "type": "flex",
