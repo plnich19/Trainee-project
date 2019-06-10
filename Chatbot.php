@@ -69,6 +69,12 @@
             }
             else if($userMsg === "git"){ 
                 $messages['messages'][0] = githubButton("GITHUB");  
+<<<<<<< Updated upstream
+=======
+            }
+            else if($userMsg === "car"){ 
+                $messages['messages'][0] = getCorousel("this is"); 
+>>>>>>> Stashed changes
             }else{
                 $error = false;
                 $lotto = str_split($userMsg);
@@ -346,6 +352,60 @@
 		return $datas;
     }
 
+<<<<<<< Updated upstream
+=======
+    function getCorousel($text){
+        $datas = [];
+		$datas['type'] = 'template';
+        $datas['altText'] = "this is a carousel template";
+        $datas['template']['type'] = "carousel";
+        $datas['template']['actions'] = [];
+        $datas['template']['columns'][0]['thumbnailImageUrl'] = "https://images.unsplash.com/photo-1418393781697-0215e2fd73e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1058&q=80";
+        $datas['template']['columns'][0]['title'] = "Winter";
+        $datas['template']['columns'][0]['text'] = $text;
+        $datas['template']['columns'][0]['actions'][0]['type'] = "uri";
+        $datas['template']['columns'][0]['actions'][0]['label'] = "Photo";
+        $datas['template']['columns'][0]['actions'][0]['uri'] = "https://images.unsplash.com/photo-1418393781697-0215e2fd73e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1058&q=80";
+        $datas['template']['columns'][0]['actions'][1]['type'] = "uri";
+        $datas['template']['columns'][0]['actions'][1]['label'] = "Unsplash";
+        $datas['template']['columns'][0]['actions'][1]['uri'] = "https://unsplash.com/photos/Z67hhn3WeQQ";
+
+        $datas['template']['columns'][1]['thumbnailImageUrl'] = "https://images.unsplash.com/photo-1556783900-2ebe375c20fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80";
+        $datas['template']['columns'][1]['title'] = "Autumn";
+        $datas['template']['columns'][1]['text'] = "This is autumn image";
+        $datas['template']['columns'][1]['actions'][0]['type'] = "uri";
+        $datas['template']['columns'][1]['actions'][0]['label'] = "Photo";
+        $datas['template']['columns'][1]['actions'][0]['uri'] = "https://images.unsplash.com/photo-1556783900-2ebe375c20fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80";
+        $datas['template']['columns'][1]['actions'][1]['type'] = "uri";
+        $datas['template']['columns'][1]['actions'][1]['label'] = "Unsplash";
+        $datas['template']['columns'][1]['actions'][1]['uri'] = "https://unsplash.com/photos/JRNigKHvB1Q";
+        return $datas;
+    }
+
+    // {
+    //     "type": "template",
+    //     "altText": "this is a carousel template",
+    //     "template": {
+    //       "type": "carousel",
+    //       "actions": [],
+    //       "columns": [
+    //         {
+    //           "thumbnailImageUrl": "https://images.unsplash.com/photo-1418393781697-0215e2fd73e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1058&q=80",
+    //           "title": "Winter",
+    //           "text": "This is winter image",
+    //           "actions": [
+    //             {
+    //               "type": "uri",
+    //               "label": "Photo",
+    //               "uri": "https://images.unsplash.com/photo-1418393781697-0215e2fd73e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1058&q=80"
+    //             }
+    //           ]
+    //         }
+    //       ]
+    //     }
+    //   }
+
+>>>>>>> Stashed changes
     // {
     //     "type": "flex",
     //     "altText": "Flex Message",
