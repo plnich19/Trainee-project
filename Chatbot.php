@@ -1,5 +1,7 @@
 <?php 
     /*Get Data From POST Http Request*/
+    //require __DIR__ . '/vendor/autoload.php';
+    //use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 
     $datas = file_get_contents('php://input');
     
@@ -55,7 +57,7 @@
     $length = 0;
 
     $LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
-    $LINEDatas['token'] = "ru4/SF1WPPPD2har7K2Uqdw379dZwjGbo1nDhSKoPPUW8W7VFUegNWRyR7vA7By06Xei5pz17m+fB+TgVRyilu9rl0Dk7dvtzroqrwGysAJEEXkK8s4GyzHcmKUFQbWzM/mHpbY/dOOf4J24q/iTwgdB04t89/1O/w1cDnyilFU=";
+    $LINEDatas['token'] = "Nk3abhHVxBzKAWlabRc5Zv26MJICEUAePNJheXK/5hi3+XdfigCpR/RzRpqkPgGv6Xei5pz17m+fB+TgVRyilu9rl0Dk7dvtzroqrwGysALsoyXa01XZG4z/XIfyQKpSnuUBHIVJ+y3c2o10zG1clwdB04t89/1O/w1cDnyilFU=";
       
     if($type === "follow"){
         $messages['messages'][0] = getFormatTextMessage("ยินดีต้อนรับสู่บอทเช็คหวย ท่านสามารถใส่หมายเลขหวยได้ที่นี่ค่ะ");  
@@ -64,6 +66,9 @@
         if($msgType === "text"){
             if($userMsg === "ตรวจหวย"){
                 $messages['messages'][0] = getFormatTextMessage("โปรดใส่เลขหวยของท่าน");  
+            }
+            else if($userMsg === "git"){ 
+                $messages['messages'][0] = githubButton("GITHUB");  
             }else{
                 $error = false;
                 $lotto = str_split($userMsg);
@@ -106,11 +111,54 @@
             $file = fopen($filename,"w");
             fwrite($file,$result);
             fclose($file);
-            //$messages['messages'][0] = getFormatTextMessage($userImg);
-            
-           
+            $messages['messages'][0] = getFormatImageMessage("https://sv1.picz.in.th/images/2019/06/10/13KwXP.jpg","https://sv1.picz.in.th/images/2019/06/10/13KtEI.jpg");
+        }
+
+        else if($msgType === "video"){
+            //ส่งเป็นวิดีโอกลับไป
+            $messages['messages'][0] = getFormatVideoMessage("https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_5mb.mp4","https://sv1.picz.in.th/images/2019/06/10/13KtEI.jpg");
+        }
+	else if($msgType === "audio"){
+            //ส่งเป็นเสียงกลับไป
+            $messages['messages'][0] = getFormatAudioMessage("http://techslides.com/demos/samples/sample.m4a");
+        }
+
+        else if($msgType === "location"){
+            //ส่งเป็นโลเคชันกลับไป
+            $messages['messages'][0] = getFormatLocationMessage("the sims");
+        }
+
+        else if($msgType === "sticker"){
+            //ส่งเป็นสติกเกอร์กลับไป
+            $messages['messages'][0] = getFormatStickerMessage("1","1");
         }
     }
+        
+    
+
+//     $strUrl = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDzwELQjOIjz2m3R0ZpHCPDLWMS-KsE1HY";
+    
+//     function detectText($file){
+//         $imageAnnotator = new ImageAnnotatorClient();
+//         $response = $imageAnnotator->textDetection($file);
+//         $texts = $response->getTextAnnotations();
+//     }
+//     printf('%d texts found:' . PHP_EOL, count($texts));
+//     foreach ($texts as $text) {
+//         print($text->getDescription() . PHP_EOL);
+//         # get bounds
+//         $vertices = $text->getBoundingPoly()->getVertices();
+//         $bounds = [];
+//         foreach ($vertices as $vertex) {
+//             $bounds[] = sprintf('(%d,%d)', $vertex->getX(), $vertex->getY());
+//         }
+//         print('Bounds: ' . join(', ',$bounds) . PHP_EOL);
+//     }
+//     if ($error = $response->getError()) {
+//         print('API Error: ' . $error->getMessage() . PHP_EOL);
+//     }
+//     $imageAnnotator->close();
+// }
 
 	$encodeJson = json_encode($messages);
 
@@ -196,12 +244,6 @@
     
     }
 
-    
-
-//    echo "<pre>";
-//    print_r($result);
-//    echo "</pre>";
-
    function testCurl($id,$token){
        $url = "https://api.line.me/v2/bot/message/".$id."/content";
        $curl = curl_init();
@@ -224,4 +266,122 @@
         curl_close($curl);
        return $response;
    }
+
+   function getFormatImageMessage($oriContent, $preImg)
+	{
+		$datas = [];
+		$datas['type'] = 'image';
+        $datas['originalContentUrl'] = $oriContent;
+        $datas['previewImageUrl'] = $preImg;
+
+		return $datas;
+    }
+    
+    function getFormatVideoMessage($oriContent, $preImg)
+	{
+		$datas = [];
+		$datas['type'] = 'video';
+        $datas['originalContentUrl'] = $oriContent;
+        $datas['previewImageUrl'] = $preImg;
+
+		return $datas;
+    }
+
+    function getFormatAudioMessage($oriContent)
+	{
+		$datas = [];
+		$datas['type'] = 'audio';
+        $datas['originalContentUrl'] = $oriContent;
+        $datas['duration'] = 240000;
+
+		return $datas;
+    }
+
+    function getFormatLocationMessage($lo)
+	{
+		$datas = [];
+		$datas['type'] = 'location';
+        $datas['title'] = $lo;
+        $datas['address'] = 'Bangkok Thailand';
+        $datas['latitude'] = 35.65910807942215;
+        $datas['longitude'] = 139.70372892916203;
+        
+        return $datas;
+    }
+
+    function getFormatStickerMessage($packetID,$stickerID)
+	{
+		$datas = [];
+		$datas['type'] = 'sticker';
+        $datas['packageId'] = $packetID;
+        $datas['stickerId'] = $stickerID;
+
+		return $datas;
+    }
+
+    function githubButton($buttonName)
+	{
+		$datas = [];
+		$datas['type'] = 'flex';
+        $datas['altText'] = "Flex Message";
+        $datas['contents']['type'] = "bubble";
+        $datas['contents']['direction'] = "ltr";
+        $datas['contents']['header']['type'] = "box";
+        $datas['contents']['header']['layout'] = "vertical";
+        $datas['contents']['header']['contents'][0]['type'] = "text";
+        $datas['contents']['header']['contents'][0]['text'] = "Sample Button";
+        $datas['contents']['header']['contents'][0]['size'] = "lg";
+        $datas['contents']['header']['contents'][0]['align'] = "center";
+        $datas['contents']['header']['contents'][0]['weight'] = "bold";
+        $datas['contents']['header']['contents'][0]['color'] = "#000000";
+        $datas['contents']['body']['type'] = "box";
+        $datas['contents']['body']['layout'] = "vertical";
+        $datas['contents']['body']['contents'][0]['type'] = "button";
+        $datas['contents']['body']['contents'][0]['action']['type'] = "uri";
+        $datas['contents']['body']['contents'][0]['action']['label'] = $buttonName;
+        $datas['contents']['body']['contents'][0]['action']['uri'] = "https://github.com/plnich19";
+        $datas['contents']['body']['contents'][0]['color'] = "#365D0F";
+        $datas['contents']['body']['contents'][0]['style'] = "primary";
+
+		return $datas;
+    }
+
+    // {
+    //     "type": "flex",
+    //     "altText": "Flex Message",
+    //     "contents": {
+    //       "type": "bubble",
+    //       "direction": "ltr",
+    //       "header": {
+    //         "type": "box",
+    //         "layout": "vertical",
+    //         "contents": [
+    //           {
+    //             "type": "text",
+    //             "text": "Sample Button",
+    //             "size": "lg",
+    //             "align": "center",
+    //             "weight": "bold",
+    //             "color": "#000000"
+    //           }
+    //         ]
+    //       },
+    //       "body": {
+    //         "type": "box",
+    //         "layout": "vertical",
+    //         "contents": [
+    //           {
+    //             "type": "button",
+    //             "action": {
+    //               "type": "uri",
+    //               "label": "GITHUB",
+    //               "uri": "https://github.com/plnich19"
+    //             },
+    //             "color": "#365D0F",
+    //             "style": "primary"
+    //           }
+    //         ]
+    //       }
+    //     }
+    //   }
 ?>
