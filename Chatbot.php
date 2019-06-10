@@ -1,8 +1,7 @@
 <?php 
     /*Get Data From POST Http Request*/
-    require __DIR__ . '/vendor/autoload.php';
-    use Google\Cloud\Vision\V1\ImageAnnotatorClient;
-
+    //require __DIR__ . '/vendor/autoload.php';
+    //use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 
     $datas = file_get_contents('php://input');
     
@@ -117,22 +116,22 @@
             $messages['messages'][0] = getFormatVideoMessage("https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_5mb.mp4","https://sv1.picz.in.th/images/2019/06/10/13KtEI.jpg");
         }
 	else if($msgType === "audio"){
-            //ส่งเป็นวิดีโอกลับไป
-            $messages['messages'][0] = getFormatAudioMessage("http://cdn.online-convert.com/example-file/audio/example.m4a");
+            //ส่งเป็นเสียงกลับไป
+            $messages['messages'][0] = getFormatAudioMessage("http://techslides.com/demos/samples/sample.m4a");
         }
 
         else if($msgType === "location"){
-            //ส่งเป็นวิดีโอกลับไป
+            //ส่งเป็นโลเคชันกลับไป
             $messages['messages'][0] = getFormatLocationMessage("the sims");
         }
 
         else if($msgType === "sticker"){
-            //ส่งเป็นวิดีโอกลับไป
+            //ส่งเป็นสติกเกอร์กลับไป
             $messages['messages'][0] = getFormatStickerMessage("1","1");
         }
     }
         
-    }
+    
 
 //     $strUrl = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDzwELQjOIjz2m3R0ZpHCPDLWMS-KsE1HY";
     
@@ -242,12 +241,6 @@
     
     }
 
-    
-
-//    echo "<pre>";
-//    print_r($result);
-//    echo "</pre>";
-
    function testCurl($id,$token){
        $url = "https://api.line.me/v2/bot/message/".$id."/content";
        $curl = curl_init();
@@ -323,3 +316,4 @@
 		return $datas;
     }
 ?>
+
