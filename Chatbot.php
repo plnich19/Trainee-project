@@ -1,5 +1,8 @@
 <?php 
     /*Get Data From POST Http Request*/
+    require __DIR__ . '/vendor/autoload.php';
+    use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+
 
     $datas = file_get_contents('php://input');
     
@@ -115,6 +118,30 @@
         }
         
     }
+
+//     $strUrl = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDzwELQjOIjz2m3R0ZpHCPDLWMS-KsE1HY";
+    
+//     function detectText($file){
+//         $imageAnnotator = new ImageAnnotatorClient();
+//         $response = $imageAnnotator->textDetection($file);
+//         $texts = $response->getTextAnnotations();
+//     }
+//     printf('%d texts found:' . PHP_EOL, count($texts));
+//     foreach ($texts as $text) {
+//         print($text->getDescription() . PHP_EOL);
+//         # get bounds
+//         $vertices = $text->getBoundingPoly()->getVertices();
+//         $bounds = [];
+//         foreach ($vertices as $vertex) {
+//             $bounds[] = sprintf('(%d,%d)', $vertex->getX(), $vertex->getY());
+//         }
+//         print('Bounds: ' . join(', ',$bounds) . PHP_EOL);
+//     }
+//     if ($error = $response->getError()) {
+//         print('API Error: ' . $error->getMessage() . PHP_EOL);
+//     }
+//     $imageAnnotator->close();
+// }
 
 	$encodeJson = json_encode($messages);
 
