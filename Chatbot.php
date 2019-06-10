@@ -350,6 +350,7 @@
     }
 
     function getCorousel($text){
+	//ฉันลืม return data ไปได้อย่างไร... 
         $datas = [];
 		$datas['type'] = 'template';
         $datas['altText'] = "this is a carousel template";
